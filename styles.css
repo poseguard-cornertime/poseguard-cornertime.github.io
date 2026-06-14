@@ -250,7 +250,7 @@ h1 {
 .version-summary p,
 .plain-section p,
 .privacy-section p,
-.requirements-section li {
+.requirements-section p {
   color: var(--muted);
   line-height: 1.7;
 }
@@ -283,20 +283,10 @@ h1 {
     linear-gradient(135deg, rgba(220, 235, 231, 0.88), rgba(255, 250, 242, 0.9));
 }
 
-.requirements-section ul {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.requirements-section li {
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: var(--surface-strong);
+.requirements-section p {
+  max-width: 920px;
+  margin-bottom: 0;
+  font-size: 17px;
 }
 
 .footer {
@@ -332,9 +322,6 @@ h1 {
     max-height: 560px;
   }
 
-  .requirements-section ul {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 680px) {
@@ -352,8 +339,7 @@ h1 {
   }
 
   .download-actions,
-  .version-summary,
-  .requirements-section ul {
+  .version-summary {
     grid-template-columns: 1fr;
   }
 
