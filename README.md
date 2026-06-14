@@ -18,3 +18,9 @@ The page dynamically loads the latest APK download links from:
 `https://api.github.com/repos/incident201/poseValidator/releases/latest`
 
 It expects release assets with names containing `offline` and `online`.
+
+## Cache busting
+
+GitHub Pages caches files for a short period. When changing CSS, JavaScript, or images,
+update the `v` query parameter on local asset URLs in `index.html` so browsers request
+the new files instead of reusing cached copies.
