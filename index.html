@@ -3,150 +3,152 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PoseGuard for Android — on-device pose and face validation with separate Offline and Online APK builds." />
-  <meta name="theme-color" content="#111827" />
+  <meta name="theme-color" content="#f7f2e8" />
+
+  <title>PoseGuard — Cornertime & Stillness Enforcement for Android</title>
+  <meta
+    name="description"
+    content="PoseGuard is an Android app for cornertime, stillness enforcement, posture control, and consensual D/s or power exchange pose-holding sessions."
+  />
 
   <meta property="og:title" content="PoseGuard" />
-  <meta property="og:description" content="On-device pose and face validation for Android. Download Offline or Online APK builds from the latest release." />
+  <meta
+    property="og:description"
+    content="Android app for cornertime, stillness enforcement, and consensual pose-holding sessions. Local on-device processing. Offline and Online APKs available."
+  />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="./assets/slide_1.webp" />
 
-  <title>PoseGuard</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png" />
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
+
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="./" aria-label="PoseGuard home">
-      <span class="brand-mark" aria-hidden="true">PG</span>
-      <span>PoseGuard</span>
-    </a>
+  <main class="page">
+    <header class="topbar" aria-label="Site header">
+      <a class="brand" href="./" aria-label="PoseGuard home">
+        <img src="./assets/icon-192.png" alt="" />
+        <span>PoseGuard</span>
+      </a>
 
-    <nav class="nav" aria-label="Main navigation">
-      <a href="#downloads">Download</a>
-      <a href="#versions">Versions</a>
-      <a href="#privacy">Privacy</a>
-      <a href="https://github.com/incident201/poseValidator" rel="noopener">GitHub</a>
-    </nav>
-  </header>
+      <a class="topbar-link" href="https://github.com/incident201/poseValidator">
+        GitHub
+      </a>
+    </header>
 
-  <main>
     <section class="hero">
       <div class="hero-content">
-        <p class="eyebrow">Android APK releases</p>
-        <h1>PoseGuard</h1>
-        <p class="hero-text">
-          On-device pose and face validation for Android, distributed as two separate APK builds:
-          Offline and Online.
+        <p class="eyebrow">Android · Local computer vision · Consent-based use</p>
+
+        <h1>Cornertime and stillness enforcement for Android.</h1>
+
+        <p class="lead">
+          PoseGuard is an Android app for strict pose-holding sessions: cornertime,
+          stillness enforcement, posture control, and consensual D/s or power exchange scenarios
+          where a person must keep a required pose for a configured duration.
         </p>
 
-        <div class="hero-actions" id="downloads">
-          <a id="download-offline" class="button button-primary" href="https://github.com/incident201/poseValidator/releases/latest" rel="noopener">
-            Download Offline APK
-          </a>
-          <a id="download-online" class="button button-secondary" href="https://github.com/incident201/poseValidator/releases/latest" rel="noopener">
-            Download Online APK
-          </a>
-        </div>
+        <div class="download-box" aria-label="Download PoseGuard">
+          <p class="release-status" id="release-status">Loading latest release…</p>
 
-        <p id="release-status" class="release-status" role="status">
-          Loading latest release…
-        </p>
-      </div>
-    </section>
+          <div class="download-actions">
+            <a
+              id="download-offline"
+              class="download-button primary"
+              href="https://github.com/incident201/poseValidator/releases/latest"
+            >
+              <strong>Download Offline APK</strong>
+              <span>No Android INTERNET permission</span>
+            </a>
 
-    <section class="section announcement" aria-labelledby="announcement-title">
-      <div class="section-inner">
-        <p class="eyebrow">Important announcement</p>
-        <h2 id="announcement-title">Offline and Online APK flavors</h2>
-        <p>
-          PoseGuard is now distributed as two separate APK flavors. Choose the version that matches
-          how you want to use the app.
-        </p>
-      </div>
-    </section>
+            <a
+              id="download-online"
+              class="download-button secondary"
+              href="https://github.com/incident201/poseValidator/releases/latest"
+            >
+              <strong>Download Online APK</strong>
+              <span>Intiface Central / buttplug.io support</span>
+            </a>
+          </div>
 
-    <section class="section" id="versions" aria-labelledby="versions-title">
-      <div class="section-inner">
-        <h2 id="versions-title">Choose your version</h2>
-        <div class="cards two-columns">
-          <article class="card">
-            <div class="card-label">Offline</div>
-            <h3>Offline APK</h3>
-            <p>
-              Keeps the previous behavior unchanged. It does not request the Android INTERNET
-              permission and continues to run fully on-device.
-            </p>
-          </article>
-
-          <article class="card">
-            <div class="card-label">Online</div>
-            <h3>Online APK</h3>
-            <p>
-              Adds integration with external toys through Intiface Central / buttplug.io. This build
-              requests the Android INTERNET permission only to communicate with Intiface Central and
-              send control signals to connected devices.
-            </p>
-          </article>
+          <p class="download-note">
+            If direct links are unavailable, open the
+            <a href="https://github.com/incident201/poseValidator/releases/latest">latest GitHub release</a>.
+          </p>
         </div>
       </div>
+
+      <figure class="hero-preview">
+        <img src="./assets/slide_1.webp" alt="PoseGuard app preview" />
+      </figure>
     </section>
 
-    <section class="section" aria-labelledby="features-title">
-      <div class="section-inner">
-        <h2 id="features-title">Online features</h2>
-        <div class="cards three-columns">
-          <article class="card compact">
-            <h3>Vibrate devices</h3>
-            <p>
-              Connect compatible Vibrate devices through Intiface Central / buttplug.io.
-            </p>
-          </article>
-
-          <article class="card compact">
-            <h3>Pose-hold signals</h3>
-            <p>
-              Send vibration signals while the required pose is being held.
-            </p>
-          </article>
-
-          <article class="card compact">
-            <h3>Violation signals</h3>
-            <p>
-              Send vibration signals when a violation is detected, configurable from the app settings.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section privacy" id="privacy" aria-labelledby="privacy-title">
-      <div class="section-inner">
-        <p class="eyebrow">Privacy</p>
-        <h2 id="privacy-title">Processing stays on your device</h2>
+    <section class="version-summary" aria-label="Offline and Online versions">
+      <article>
+        <h2>Offline</h2>
         <p>
-          Pose and face detection processing is performed locally on the device. PoseGuard does not
-          upload images, logs, telemetry, pose data, or user data to external servers.
+          The Offline APK keeps PoseGuard fully local. It does not request Android INTERNET permission,
+          so Android prevents it from accessing the network.
+        </p>
+      </article>
+
+      <article>
+        <h2>Online</h2>
+        <p>
+          The Online APK adds optional integration with Intiface Central / buttplug.io for compatible
+          external toys. It can send vibration signals while the pose is held or when violations occur.
+        </p>
+      </article>
+    </section>
+
+    <section class="plain-section">
+      <h2>What PoseGuard checks</h2>
+      <p>
+        At the start of a session, PoseGuard records the initial pose as a reference.
+        During the session, it compares live camera tracking against that reference and detects
+        pose drift, sudden movement, and optional face-direction violations.
+      </p>
+      <p>
+        Sessions can use configurable duration, movement sensitivity, voice feedback,
+        optional timer penalties, face direction checks, and timelapse recording.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <div>
+        <h2>Privacy</h2>
+        <p>
+          Pose and face detection, movement analysis, timer logic, penalties, voice feedback,
+          and timelapse recording are processed locally on the Android device.
+        </p>
+        <p>
+          PoseGuard does not upload images, video, logs, telemetry, tracking data, session data,
+          or private user data to external servers.
+        </p>
+        <p>
+          The Online APK uses INTERNET permission only for user-configured integrations such as
+          Intiface Central communication.
         </p>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="limitations-title">
-      <div class="section-inner">
-        <h2 id="limitations-title">Current limitations</h2>
-        <p>
-          At this stage, only Vibration control is supported. Other device modes such as Oscillation,
-          Rotation, and additional actuator types are not implemented yet.
-        </p>
-      </div>
+    <section class="requirements-section">
+      <h2>Requirements</h2>
+      <ul>
+        <li>Android 11 or newer</li>
+        <li>A device powerful enough for real-time on-device computer vision</li>
+        <li>Good lighting and a stable camera position</li>
+        <li>The subject should be fully visible in the camera frame</li>
+      </ul>
     </section>
+
+    <footer class="footer">
+      <span>PoseGuard is currently under development.</span>
+      <a href="https://github.com/incident201/poseValidator">Source code and releases</a>
+    </footer>
   </main>
-
-  <footer class="site-footer">
-    <span>PoseGuard</span>
-    <span>•</span>
-    <a href="https://github.com/incident201/poseValidator/releases/latest" rel="noopener">Latest release</a>
-    <span>•</span>
-    <a href="https://github.com/incident201/poseValidator" rel="noopener">Source repository</a>
-  </footer>
 
   <script src="./site.js"></script>
 </body>
