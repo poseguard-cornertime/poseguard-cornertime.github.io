@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://poseguard-cornertime.github.io/sitemap.xml
