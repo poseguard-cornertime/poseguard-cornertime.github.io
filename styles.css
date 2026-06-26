@@ -36,6 +36,10 @@ body {
     linear-gradient(180deg, #fbf6ed 0%, var(--bg) 48%, #f1e8dc 100%);
 }
 
+img {
+  max-width: 100%;
+}
+
 a {
   color: inherit;
 }
@@ -51,7 +55,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 10px 0 28px;
+  padding: 10px 0 22px;
 }
 
 .brand {
@@ -87,7 +91,12 @@ a {
   grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
   gap: 44px;
   align-items: center;
-  min-height: calc(100vh - 104px);
+  min-height: auto;
+  padding: 40px 0 64px;
+}
+
+.hero-content {
+  min-width: 0;
 }
 
 .eyebrow {
@@ -101,6 +110,7 @@ a {
 
 h1,
 h2,
+h3,
 p {
   margin-top: 0;
 }
@@ -108,8 +118,8 @@ p {
 h1 {
   max-width: 780px;
   margin-bottom: 24px;
-  font-size: clamp(46px, 7vw, 82px);
-  line-height: 0.95;
+  font-size: clamp(42px, 5.6vw, 72px);
+  line-height: 0.98;
   letter-spacing: -0.07em;
 }
 
@@ -117,7 +127,7 @@ h1 {
   max-width: 760px;
   margin-bottom: 30px;
   color: var(--muted);
-  font-size: clamp(18px, 2vw, 23px);
+  font-size: clamp(18px, 1.65vw, 22px);
   line-height: 1.58;
 }
 
@@ -212,8 +222,7 @@ h1 {
 .hero-preview img {
   display: block;
   width: 100%;
-  min-height: 430px;
-  max-height: 720px;
+  height: clamp(420px, 52vh, 580px);
   object-fit: cover;
 }
 
@@ -289,79 +298,8 @@ h1 {
   font-size: 17px;
 }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 24px;
-  padding: 18px 4px 0;
-  color: var(--soft);
-  font-size: 14px;
-}
-
-.footer a {
-  color: var(--accent-dark);
-  font-weight: 800;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-}
-
-@media (max-width: 980px) {
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding-top: 10px;
-  }
-
-  .hero-preview {
-    order: -1;
-  }
-
-  .hero-preview img {
-    min-height: 300px;
-    max-height: 560px;
-  }
-
-}
-
-@media (max-width: 680px) {
-  .page {
-    width: min(100% - 24px, 1120px);
-    padding-top: 12px;
-  }
-
-  .topbar {
-    padding-bottom: 18px;
-  }
-
-  h1 {
-    font-size: clamp(42px, 15vw, 62px);
-  }
-
-  .download-actions,
-  .version-summary {
-    grid-template-columns: 1fr;
-  }
-
-  .download-box,
-  .version-summary article,
-  .plain-section,
-  .privacy-section,
-  .requirements-section {
-    border-radius: 22px;
-  }
-
-  .hero-preview {
-    border-radius: 24px;
-  }
-
-  .hero-preview img {
-    min-height: 240px;
-  }
-
-  .footer {
-    flex-direction: column;
-  }
+.requirements-section p + p {
+  margin-top: 12px;
 }
 
 .section-kicker {
@@ -388,6 +326,10 @@ h1 {
 
 .tracking-section {
   grid-template-columns: minmax(0, 1.28fr) minmax(260px, 340px);
+}
+
+.section-copy {
+  min-width: 0;
 }
 
 .section-copy h2,
@@ -475,21 +417,50 @@ h1 {
   box-shadow: 0 16px 40px rgba(60, 44, 28, 0.08);
 }
 
+.visual-card-body {
+  min-width: 0;
+}
+
 .visual-card-image img {
   border-radius: 20px;
   box-shadow: 0 14px 30px rgba(60, 44, 28, 0.12);
 }
 
-.privacy-section {
-  background:
-    linear-gradient(135deg, rgba(220, 235, 231, 0.88), rgba(255, 250, 242, 0.9));
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 18px 4px 0;
+  color: var(--soft);
+  font-size: 14px;
 }
 
-.requirements-section p + p {
-  margin-top: 12px;
+.footer a {
+  color: var(--accent-dark);
+  font-weight: 800;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 @media (max-width: 980px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    min-height: auto;
+    padding: 10px 0 36px;
+  }
+
+  .hero-preview {
+    order: -1;
+  }
+
+  .hero-preview img {
+    height: auto;
+    min-height: 300px;
+    max-height: 560px;
+  }
+
   .illustrated-section,
   .tracking-section {
     grid-template-columns: 1fr;
@@ -519,6 +490,44 @@ h1 {
 }
 
 @media (max-width: 680px) {
+  .page {
+    width: min(100% - 24px, 1120px);
+    padding-top: 12px;
+  }
+
+  .topbar {
+    padding-bottom: 18px;
+  }
+
+  h1 {
+    font-size: clamp(42px, 15vw, 62px);
+  }
+
+  .lead {
+    font-size: 18px;
+  }
+
+  .download-actions,
+  .version-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .download-box,
+  .version-summary article,
+  .plain-section,
+  .privacy-section,
+  .requirements-section {
+    border-radius: 22px;
+  }
+
+  .hero-preview {
+    border-radius: 24px;
+  }
+
+  .hero-preview img {
+    min-height: 240px;
+  }
+
   .illustrated-section {
     gap: 22px;
     padding: 22px;
@@ -554,5 +563,9 @@ h1 {
   .section-image img,
   .visual-card-image img {
     border-radius: 18px;
+  }
+
+  .footer {
+    flex-direction: column;
   }
 }
