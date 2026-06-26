@@ -362,8 +362,9 @@ h1 {
   .footer {
     flex-direction: column;
   }
+}
 
-  .section-kicker {
+.section-kicker {
   margin: 0 0 12px;
   color: var(--accent);
   font-size: 12px;
@@ -554,5 +555,4 @@ h1 {
   .visual-card-image img {
     border-radius: 18px;
   }
-}
 }
