@@ -8,7 +8,7 @@
   <title>How the PoseGuard Cornertime App Works — Pose Tracking Explained</title>
   <meta
     name="description"
-    content="How the PoseGuard cornertime app for Android detects movement: MediaPipe Pose Landmarker, One Euro smoothing, pose drift and sudden motion thresholds, face direction checks, timer penalties, and session flow."
+    content="How the PoseGuard cornertime app for Android detects movement: MediaPipe Pose Landmarker, pose drift and sudden motion thresholds, face direction checks, timer penalties, and session flow."
   />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://poseguard-cornertime.github.io/cornertime-app/" />
@@ -217,7 +217,6 @@
         <h3>Take position</h3>
         <p>
           A 10-second countdown gives time to step into the frame and take the pose.
-          During the last 2 seconds the app calibrates which joints are clearly visible.
           If shoulders, elbows, hips, and knees are not all detected, the session does not
           start: “Camera cannot see the full body”.
         </p>
@@ -258,12 +257,10 @@
     </p>
 
     <ol class="pipeline" aria-label="Processing stages">
-      <li><strong>CameraX</strong><span>1280×720 frames, only the newest kept</span></li>
+      <li><strong>Camera</strong><span>live video frames</span></li>
       <li><strong>Pose Landmarker</strong><span>33 body landmarks</span></li>
-      <li><strong>Identity check</strong><span>fixes left/right swaps</span></li>
-      <li><strong>One Euro Filter</strong><span>removes jitter</span></li>
-      <li><strong>Occlusion guard</strong><span>handles hidden joints</span></li>
-      <li><strong>Movement tracker</strong><span>drift and motion scores</span></li>
+      <li><strong>Smoothing</strong><span>removes jitter</span></li>
+      <li><strong>Movement analysis</strong><span>drift and motion scores</span></li>
       <li><strong>Session rules</strong><span>warnings and penalties</span></li>
     </ol>
 
@@ -271,69 +268,36 @@
       <article>
         <h3>MediaPipe Pose Landmarker</h3>
         <p>
-          Body tracking uses Google’s MediaPipe Pose Landmarker in live-stream mode. For each
-          frame it returns 33 landmarks with x, y, z coordinates plus visibility and
-          presence scores. PoseGuard tracks one person and requires 70% detection and
-          presence confidence and 75% tracking confidence.
-        </p>
-        <p>
-          Two models are included: <em>Heavy</em> for best accuracy (default) and
-          <em>Full</em> for faster processing on weaker devices.
+          Body tracking uses Google’s MediaPipe Pose Landmarker. For every camera frame it
+          finds 33 body landmarks with their position and visibility. Two models are included:
+          <em>Heavy</em> for best accuracy (default) and <em>Full</em> for faster processing on
+          weaker devices.
         </p>
       </article>
 
       <article>
-        <h3>GPU acceleration with CPU fallback</h3>
+        <h3>GPU acceleration</h3>
         <p>
-          In Auto mode tracking starts on the CPU immediately, then the GPU delegate is
-          initialized in the background and takes over once it is ready. If the GPU fails
-          or does not initialize within 15 seconds, PoseGuard stays on the CPU and remembers
-          the result for this device. GPU or CPU can also be selected manually.
+          In Auto mode PoseGuard uses the GPU when the device supports it and falls back to the
+          CPU otherwise. The choice is remembered for the device and can also be set manually.
         </p>
       </article>
 
       <article>
-        <h3>Left/right identity stabilization</h3>
+        <h3>Smoothing</h3>
         <p>
-          Pose models sometimes swap the left and right sides of the body, especially when the
-          person faces away from the camera, which is common in cornertime. PoseGuard compares
-          every new pose in both the direct and the mirrored form against the previous stable
-          pose and keeps the closer one. Frames with impossible torso proportions are rejected
-          as outliers.
+          Raw landmarks jitter slightly even when a person stands perfectly still. PoseGuard
+          smooths them with a One Euro Filter, so sensor noise is not mistaken for movement
+          while real movement is still detected quickly.
         </p>
       </article>
 
       <article>
-        <h3>One Euro Filter smoothing</h3>
+        <h3>Hidden joints</h3>
         <p>
-          Raw landmarks jitter slightly even when a person stands perfectly still. Each landmark
-          is smoothed with a One Euro Filter: an adaptive low-pass filter that smooths heavily
-          when the body is still and reacts quickly when it really moves. Without it, sensor
-          noise would look like movement.
-        </p>
-      </article>
-
-      <article>
-        <h3>Occlusion guard</h3>
-        <p>
-          Hands behind the back or the head, or legs hidden behind each other, are hard for any
-          pose model. During the last 2 seconds of the countdown PoseGuard measures visibility
-          and jitter of elbows, wrists, knees, and ankles. Joints that are hidden or unstable are
-          frozen at their position relative to the body, so a guessed position cannot cause
-          false violations.
-        </p>
-        <p>
-          If a frozen joint becomes clearly visible for 5 frames in a row, tracking hands over
-          to it smoothly over 8 frames.
-        </p>
-      </article>
-
-      <article>
-        <h3>Short dropout protection</h3>
-        <p>
-          If the detector briefly loses the body for up to 5 frames (180 ms), the last valid pose
-          is held instead of reporting a disappearance. Longer gaps reset the filters so stale
-          data is never compared with the reference.
+          If hands, arms, or legs are hidden in the chosen pose, for example hands behind the
+          head, PoseGuard notices this before the timer starts and ignores the guessed position
+          of those joints instead of counting false violations.
         </p>
       </article>
     </div>
@@ -347,26 +311,24 @@
 
       <p>
         PoseGuard compares 12 key points: shoulders, elbows, wrists, hips, knees, and ankles.
-        Coordinates are centered on the hips and divided by the body size (the largest of
-        shoulder width, hip width, and torso length). Because of this normalization the
-        thresholds work the same whether the phone is 2 or 4 meters away.
+        Positions are measured relative to the size of the body itself, so the thresholds
+        work the same whether the phone is 2 or 4 meters away.
       </p>
 
       <div class="mini-checks">
         <article>
           <h3>Pose drift</h3>
           <p>
-            Distance between the current pose and the reference. A violation is counted only
-            if drift stays above the threshold for about 1.5 seconds, so a brief wobble is
-            ignored but slowly changing the pose is not.
+            How far the current pose is from the reference. Drift must stay above the threshold
+            for a moment, so a brief wobble is ignored but slowly changing the pose is not.
           </p>
         </article>
 
         <article>
           <h3>Sudden movement</h3>
           <p>
-            Change between consecutive frames. Motion above the threshold for 0.9 seconds is a
-            violation; a sharp spike of 2.5× the threshold counts immediately.
+            How fast the body moves between frames. Sustained motion is a violation, and a
+            sharp jerk counts immediately.
           </p>
         </article>
       </div>
@@ -387,9 +349,8 @@
   <section class="plain-section" aria-labelledby="presets-title">
     <h2 id="presets-title">Sensitivity presets</h2>
     <p>
-      Both thresholds are set as a fraction of body size. Wrists count at 70% weight in drift
-      by default, because hands move slightly more than the rest of the body even in a strict
-      pose. Small deadbands remove the remaining sensor noise before thresholds are checked.
+      Both thresholds are set as a fraction of body size, so they work the same at any
+      distance from the camera. Pick them in the app settings.
     </p>
 
     <div class="table-grid">
@@ -451,11 +412,9 @@
         <h2>Face direction</h2>
 
         <p>
-          PoseGuard crops the head area using the face landmarks from the pose and runs
-          MediaPipe Face Detector (BlazeFace short-range) on it. Choose “Face to camera” or
-          “Face away from camera”. Breaking the rule for 5 frames in a row counts as a
-          violation. If face detection stops working for 5 seconds, the session is stopped
-          without a penalty.
+          Optional face tracking with MediaPipe Face Detector checks whether the user faces
+          the camera or looks away from it. Choose “Face to camera” or “Face away from
+          camera”; breaking the selected rule counts as a violation.
         </p>
       </div>
     </article>
@@ -505,7 +464,7 @@
       </article>
       <article>
         <h3>Out of frame</h3>
-        <p>Key points missing for more than 1.5 seconds</p>
+        <p>The body leaves the frame</p>
       </article>
     </div>
 
@@ -552,8 +511,7 @@
       <article>
         <h3>Intiface Central (Online APK)</h3>
         <p>
-          The Online APK connects to Intiface Central over WebSocket
-          (<code>ws://127.0.0.1:12345</code> by default) and controls compatible devices
+          The Online APK connects to Intiface Central and controls compatible devices
           through buttplug.io. Vibration can run in the background while the pose is held and
           react to violations with a vibration or a pause, as a constant signal or pulses with
           adjustable strength.
@@ -616,8 +574,8 @@
 
     <p>
       Simple and clearly visible poses are usually more reliable than complex poses
-      where arms or legs overlap heavily. Hands behind the head or back are supported by the
-      occlusion guard, but the elbows should stay visible. Loose or bulky clothing makes pose
+      where arms or legs overlap heavily. Hands behind the head or back are fine, but the
+      elbows should stay visible. Loose or bulky clothing makes pose
       tracking harder, while close-fitting clothing gives the app a clearer body shape.
     </p>
 
