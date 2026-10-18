@@ -21,7 +21,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://poseguard-cornertime.github.io/cornertime-app/" />
   <meta property="og:site_name" content="PoseGuard" />
-  <meta property="og:image" content="https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2" />
+  <meta property="og:image" content="https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="PoseGuard cornertime app for Android with pose tracking" />
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -30,13 +33,13 @@
     name="twitter:description"
     content="Free Android cornertime app with offline pose tracking, stillness detection, movement warnings, face direction checks, timer penalties, and APK downloads from GitHub."
   />
-  <meta name="twitter:image" content="https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2" />
+  <meta name="twitter:image" content="https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018" />
 
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png?v=20260614-2" />
   <link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png?v=20260614-2" />
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=20260614-2" />
 
-  <link rel="stylesheet" href="../styles.css?v=20260626-2" />
+  <link rel="stylesheet" href="../styles.css?v=20261018" />
 
   <script type="application/ld+json">
   {
@@ -45,19 +48,21 @@
     "name": "PoseGuard",
     "alternateName": "PoseGuard Cornertime App",
     "operatingSystem": "Android 11+",
-    "applicationCategory": "UtilityApplication",
+    "applicationCategory": "UtilitiesApplication",
     "softwareVersion": "1.4.1",
     "isAccessibleForFree": true,
     "description": "PoseGuard is a free cornertime app for Android with offline pose tracking, stillness detection, movement warnings, face direction checks, timer penalties, and APK downloads from GitHub.",
     "url": "https://poseguard-cornertime.github.io/cornertime-app/",
     "downloadUrl": "https://github.com/incident201/poseGuard/releases/latest",
     "codeRepository": "https://github.com/incident201/poseGuard",
-    "image": "https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2",
+    "image": "https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018",
     "screenshot": [
       "https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2",
-      "https://poseguard-cornertime.github.io/assets/slide_2.webp?v=20260614-2",
-      "https://poseguard-cornertime.github.io/assets/slide_3.webp?v=20260614-2",
-      "https://poseguard-cornertime.github.io/assets/slide_4.webp?v=20260614-2"
+      "https://poseguard-cornertime.github.io/assets/Slide_howposetracking.webp",
+      "https://poseguard-cornertime.github.io/assets/Slide_facedetect.webp",
+      "https://poseguard-cornertime.github.io/assets/Slide_timer.webp",
+      "https://poseguard-cornertime.github.io/assets/Slide_setup.webp",
+      "https://poseguard-cornertime.github.io/assets/Slide_privacy.webp"
     ],
     "offers": {
       "@type": "Offer",
@@ -75,17 +80,18 @@
   <main class="page">
   <header class="topbar" aria-label="Site header">
     <a class="brand" href="../" aria-label="PoseGuard home">
-      <img src="../assets/icon-192.png?v=20260614-2" alt="" />
+      <img src="../assets/icon-192.png?v=20260614-2" alt="" width="192" height="192" />
       <span>PoseGuard</span>
     </a>
 
-    <a
-      class="topbar-link"
-      href="https://github.com/incident201/poseGuard"
-      aria-label="PoseGuard Android cornertime app on GitHub"
-    >
-      GitHub
-    </a>
+    <nav class="topnav" aria-label="Main">
+      <a href="../">Overview</a>
+      <a href="../#faq">FAQ</a>
+      <a
+        href="https://github.com/incident201/poseGuard"
+        aria-label="PoseGuard Android cornertime app on GitHub"
+      >GitHub</a>
+    </nav>
   </header>
 
   <section class="hero">
@@ -99,8 +105,15 @@
         a timed session.
       </p>
 
-      <div class="download-box" aria-label="Download PoseGuard cornertime app">
-        <p class="release-status">Latest release: v1.4.1</p>
+      <ul class="hero-facts" aria-label="Key facts">
+        <li>Free</li>
+        <li>Android 11+</li>
+        <li>Works offline</li>
+        <li>Open source</li>
+      </ul>
+
+      <div class="download-box" id="download" aria-label="Download PoseGuard cornertime app">
+        <p class="release-status"><span class="release-badge">v1.4.1</span> Latest release</p>
 
         <div class="download-actions">
           <a
@@ -124,9 +137,7 @@
 
         <p class="download-note">
           If direct APK links are unavailable, open the
-          <a href="https://github.com/incident201/poseGuard/releases/latest">
-            latest PoseGuard Android cornertime app release on GitHub
-          </a>.
+          <a href="https://github.com/incident201/poseGuard/releases/latest">latest PoseGuard Android cornertime app release on GitHub</a>.
         </p>
       </div>
     </div>
@@ -135,6 +146,9 @@
       <img
         src="../assets/slide_1.webp?v=20260614-2"
         alt="PoseGuard Android cornertime app setup screen"
+        width="1086"
+        height="1448"
+        fetchpriority="high"
       />
     </figure>
   </section>
@@ -180,6 +194,8 @@
       <img
         src="../assets/Slide_howposetracking.webp"
         alt="Illustration explaining how PoseGuard tracks body pose during a session"
+        width="1086"
+        height="1448"
         loading="lazy"
         decoding="async"
       />
@@ -192,6 +208,8 @@
         <img
           src="../assets/Slide_facedetect.webp"
           alt="PoseGuard face direction detection explanation"
+          width="1086"
+          height="1448"
           loading="lazy"
           decoding="async"
         />
@@ -215,6 +233,8 @@
         <img
           src="../assets/Slide_timer.webp"
           alt="PoseGuard timer penalties explanation"
+          width="1086"
+          height="1448"
           loading="lazy"
           decoding="async"
         />
@@ -238,6 +258,8 @@
       <img
         src="../assets/Slide_setup.webp"
         alt="Recommended phone setup for PoseGuard tracking"
+        width="1086"
+        height="1448"
         loading="lazy"
         decoding="async"
       />
@@ -345,6 +367,8 @@
       <img
         src="../assets/Slide_privacy.webp"
         alt="PoseGuard privacy and local processing explanation"
+        width="1086"
+        height="1448"
         loading="lazy"
         decoding="async"
       />
@@ -391,17 +415,39 @@
 
     <p>
       Open the project here:
-      <a href="https://github.com/incident201/poseGuard">
-        PoseGuard Android cornertime app source code and releases
-      </a>.
+      <a href="https://github.com/incident201/poseGuard">PoseGuard Android cornertime app source code and releases</a>.
     </p>
+  </section>
+
+  <section class="cta-section" aria-labelledby="cta-title">
+    <h2 id="cta-title">Download the cornertime app for Android</h2>
+    <p>
+      Free PoseGuard APK, version 1.4.1, for Android 11 and newer. Choose Offline
+      for no network access, or Online for Intiface Central integration.
+    </p>
+
+    <div class="download-actions">
+      <a
+        class="download-button primary"
+        href="https://github.com/incident201/poseGuard/releases/download/v1.4.1/poseGuard_v1.4.1_offline_release.apk"
+      >
+        <strong>Download Offline APK</strong>
+        <span>No Android INTERNET permission</span>
+      </a>
+
+      <a
+        class="download-button secondary"
+        href="https://github.com/incident201/poseGuard/releases/download/v1.4.1/poseGuard_v1.4.1_online_release.apk"
+      >
+        <strong>Download Online APK</strong>
+        <span>Intiface Central / buttplug.io support</span>
+      </a>
+    </div>
   </section>
 
   <footer class="footer">
     <span>Looking for the main PoseGuard page?</span>
-    <a href="../">
-      PoseGuard — cornertime app for Android
-    </a>
+    <a href="../">PoseGuard — cornertime app for Android</a>
   </footer>
 </main>
 </body>
