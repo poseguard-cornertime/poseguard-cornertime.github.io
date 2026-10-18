@@ -603,13 +603,6 @@ code {
   margin-bottom: 0;
 }
 
-.table-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  margin: 20px 0 16px;
-}
-
 .table-wrap {
   overflow-x: auto;
 }
@@ -620,26 +613,11 @@ code {
   font-size: 15px;
 }
 
-.data-table caption {
-  margin-bottom: 8px;
-  color: var(--text);
-  font-weight: 800;
-  text-align: left;
-}
-
 .data-table th,
 .data-table td {
   padding: 10px 12px;
   border-bottom: 1px solid var(--line);
   text-align: left;
-}
-
-.data-table thead th {
-  color: var(--soft);
-  font-size: 13px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
 
 .data-table td,
@@ -653,19 +631,8 @@ code {
   font-weight: 750;
 }
 
-.data-table tr.is-default td {
-  background: var(--accent-soft);
-  color: var(--accent-dark);
-  font-weight: 800;
-}
-
 .spec-table {
   margin: 8px 0 16px;
-}
-
-.plain-section .table-note {
-  margin: 0;
-  font-size: 15px;
 }
 
 .rule-grid {
@@ -1072,7 +1039,6 @@ code {
   }
 
   .tech-grid,
-  .table-grid,
   .rule-grid {
     grid-template-columns: 1fr;
   }
