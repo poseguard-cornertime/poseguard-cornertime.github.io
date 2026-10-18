@@ -21,7 +21,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://poseguard-cornertime.github.io/" />
   <meta property="og:site_name" content="PoseGuard" />
-  <meta property="og:image" content="https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2" />
+  <meta property="og:image" content="https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="PoseGuard Android cornertime app preview" />
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -30,13 +33,13 @@
     name="twitter:description"
     content="Free Android cornertime app with offline pose tracking, stillness detection, movement warnings, voice feedback, timer penalties, and APK downloads from GitHub."
   />
-  <meta name="twitter:image" content="https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2" />
+  <meta name="twitter:image" content="https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018" />
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png?v=20260614-2" />
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png?v=20260614-2" />
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png?v=20260614-2" />
 
-  <link rel="stylesheet" href="./styles.css?v=20260626-2" />
+  <link rel="stylesheet" href="./styles.css?v=20261018" />
 
   <script type="application/ld+json">
   {
@@ -52,8 +55,13 @@
     "url": "https://poseguard-cornertime.github.io/",
     "downloadUrl": "https://github.com/incident201/poseGuard/releases/latest",
     "codeRepository": "https://github.com/incident201/poseGuard",
-    "image": "https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2",
-    "screenshot": "https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2",
+    "image": "https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018",
+    "screenshot": [
+      "https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2",
+      "https://poseguard-cornertime.github.io/assets/Slide_howposetracking.webp",
+      "https://poseguard-cornertime.github.io/assets/Slide_facedetect.webp",
+      "https://poseguard-cornertime.github.io/assets/Slide_timer.webp"
+    ],
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -64,41 +72,102 @@
     ]
   }
   </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is PoseGuard free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. PoseGuard is a free and open-source cornertime app for Android. APK files and source code are published on GitHub."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the cornertime app work offline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The Offline APK does not request Android INTERNET permission. Pose tracking, movement detection, timer penalties, voice feedback, and timelapse recording run locally on the Android device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between the Offline APK and the Online APK?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Both versions have the same pose tracking and cornertime session features. The Online APK adds optional integration with Intiface Central / buttplug.io for compatible external devices. Choose the Offline APK if you want the app to have no network access at all."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does PoseGuard upload camera images or video?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. PoseGuard does not upload images, video, logs, telemetry, tracking data, or session data to external servers. Camera analysis runs on the device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which Android version does PoseGuard need?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "PoseGuard requires Android 11 or newer and a device fast enough to run real-time computer vision for pose tracking."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I install the PoseGuard APK?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Download the Offline or Online APK on your Android phone, open the file, and allow installation from this source if Android asks. Then grant camera permission when the app starts."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
   <main class="page">
     <header class="topbar" aria-label="Site header">
       <a class="brand" href="./" aria-label="PoseGuard home">
-        <img src="./assets/icon-192.png?v=20260614-2" alt="" />
+        <img src="./assets/icon-192.png?v=20260614-2" alt="" width="192" height="192" />
         <span>PoseGuard</span>
       </a>
 
-      <a
-        class="topbar-link"
-        href="https://github.com/incident201/poseGuard"
-        aria-label="PoseGuard Android cornertime app on GitHub"
-      >
-        GitHub
-      </a>
+      <nav class="topnav" aria-label="Main">
+        <a href="./cornertime-app/">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a
+          href="https://github.com/incident201/poseGuard"
+          aria-label="PoseGuard Android cornertime app on GitHub"
+        >GitHub</a>
+      </nav>
     </header>
 
     <section class="hero">
       <div class="hero-content">
         <h1>PoseGuard — cornertime app for Android</h1>
 
-        <p>
+        <p class="lead">
           PoseGuard is a free Android cornertime app with offline pose tracking,
           stillness detection, movement warnings, voice feedback, timer penalties,
           and APK downloads from GitHub.
         </p>
-        <p>
-          Read the extended guide:
-          <a href="./cornertime-app/">how the PoseGuard cornertime app works</a>.
-        </p>
 
-        <div class="download-box" aria-label="Download PoseGuard">
-          <p class="release-status">Latest release: v1.4.1</p>
+        <ul class="hero-facts" aria-label="Key facts">
+          <li>Free</li>
+          <li>Android 11+</li>
+          <li>Works offline</li>
+          <li>Open source</li>
+        </ul>
+
+        <div class="download-box" id="download" aria-label="Download PoseGuard">
+          <p class="release-status"><span class="release-badge">v1.4.1</span> Latest release</p>
 
           <div class="download-actions">
             <a
@@ -122,17 +191,23 @@
 
           <p class="download-note">
             If direct APK links are unavailable, open the
-            <a href="https://github.com/incident201/poseGuard/releases/latest">
-              latest PoseGuard Android cornertime app release on GitHub
-            </a>.
+            <a href="https://github.com/incident201/poseGuard/releases/latest">latest PoseGuard Android cornertime app release on GitHub</a>.
           </p>
         </div>
+
+        <p class="hero-guide">
+          Read the extended guide:
+          <a href="./cornertime-app/">how the PoseGuard cornertime app works</a>.
+        </p>
       </div>
 
       <figure class="hero-preview">
         <img
           src="./assets/slide_1.webp?v=20260614-2"
           alt="Screenshot of PoseGuard Android cornertime app with pose tracking"
+          width="1086"
+          height="1448"
+          fetchpriority="high"
         />
       </figure>
     </section>
@@ -150,6 +225,99 @@
         violations. Sessions can include configurable movement sensitivity, voice
         feedback, optional timer penalties, and timelapse recording.
       </p>
+    </section>
+
+    <section class="illustrated-section tracking-section">
+      <div class="section-copy">
+        <p class="section-kicker">Pose tracking</p>
+
+        <h2>What PoseGuard checks</h2>
+
+        <p>
+          At the start of a session, PoseGuard records the initial pose as a reference.
+          During the session, it compares live camera tracking against that reference
+          and detects pose drift, sudden movement, and optional face-direction violations.
+        </p>
+
+        <div class="mini-checks">
+          <article>
+            <h3>Pose drift</h3>
+            <p>
+              Gradual movement away from the starting pose is detected and counted
+              as a violation.
+            </p>
+          </article>
+
+          <article>
+            <h3>Sudden movement</h3>
+            <p>
+              Short, sharp movements that break stillness trigger a warning even if
+              the pose has not drifted far.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <figure class="section-image">
+        <img
+          src="./assets/Slide_howposetracking.webp"
+          alt="How the PoseGuard cornertime app compares live pose tracking with the reference pose"
+          width="1086"
+          height="1448"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </section>
+
+    <section class="visual-card-grid" aria-label="Optional cornertime session rules">
+      <article class="visual-card">
+        <figure class="visual-card-image">
+          <img
+            src="./assets/Slide_facedetect.webp"
+            alt="PoseGuard face direction check during a cornertime session"
+            width="1086"
+            height="1448"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+
+        <div class="visual-card-body">
+          <p class="section-kicker">Optional rule</p>
+
+          <h3>Face direction</h3>
+
+          <p>
+            Optional face tracking checks whether the user faces the camera or looks
+            away from it, as selected for the cornertime session.
+          </p>
+        </div>
+      </article>
+
+      <article class="visual-card">
+        <figure class="visual-card-image">
+          <img
+            src="./assets/Slide_timer.webp"
+            alt="PoseGuard cornertime timer with penalty time after violations"
+            width="1086"
+            height="1448"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+
+        <div class="visual-card-body">
+          <p class="section-kicker">Session timer</p>
+
+          <h3>Timer penalties</h3>
+
+          <p>
+            Violations can add extra time to the timer, so the session continues
+            instead of ending after the first mistake. Voice feedback announces warnings.
+          </p>
+        </div>
+      </article>
     </section>
 
     <section class="version-summary" aria-label="Offline and Online versions">
@@ -171,22 +339,12 @@
       </article>
     </section>
 
-    <section class="plain-section">
-      <h2>What PoseGuard checks</h2>
-      <p>
-        At the start of a session, PoseGuard records the initial pose as a reference.
-        During the session, it compares live camera tracking against that reference
-        and detects pose drift, sudden movement, and optional face-direction violations.
-      </p>
-      <p>
-        PoseGuard is built for Android devices and uses local on-device computer vision
-        instead of uploading camera frames or session data to external servers.
-      </p>
-    </section>
+    <section class="illustrated-section privacy-section">
+      <div class="section-copy">
+        <p class="section-kicker">Privacy</p>
 
-    <section class="privacy-section">
-      <div>
         <h2>Privacy</h2>
+
         <p>
           Pose and face detection, movement analysis, timer logic, penalties, voice feedback,
           and timelapse recording are processed locally on the Android device.
@@ -200,6 +358,17 @@
           such as Intiface Central communication.
         </p>
       </div>
+
+      <figure class="section-image">
+        <img
+          src="./assets/Slide_privacy.webp"
+          alt="PoseGuard cornertime app processes camera data locally on the Android device"
+          width="1086"
+          height="1448"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
     </section>
 
     <section class="plain-section">
@@ -216,9 +385,7 @@
       </p>
       <p>
         The project is open source and available on GitHub:
-        <a href="https://github.com/incident201/poseGuard">
-          PoseGuard Android cornertime app source code and releases
-        </a>.
+        <a href="https://github.com/incident201/poseGuard">PoseGuard Android cornertime app source code and releases</a>.
       </p>
     </section>
 
@@ -230,11 +397,91 @@
       </p>
     </section>
 
+    <section class="faq-section" id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Cornertime app FAQ</h2>
+
+      <details>
+        <summary>Is PoseGuard free?</summary>
+        <p>
+          Yes. PoseGuard is a free and open-source cornertime app for Android. APK files
+          and source code are published on GitHub.
+        </p>
+      </details>
+
+      <details>
+        <summary>Does the cornertime app work offline?</summary>
+        <p>
+          Yes. The Offline APK does not request Android INTERNET permission. Pose tracking,
+          movement detection, timer penalties, voice feedback, and timelapse recording run
+          locally on the Android device.
+        </p>
+      </details>
+
+      <details>
+        <summary>What is the difference between the Offline APK and the Online APK?</summary>
+        <p>
+          Both versions have the same pose tracking and cornertime session features. The
+          Online APK adds optional integration with Intiface Central / buttplug.io for
+          compatible external devices. Choose the Offline APK if you want the app to have
+          no network access at all.
+        </p>
+      </details>
+
+      <details>
+        <summary>Does PoseGuard upload camera images or video?</summary>
+        <p>
+          No. PoseGuard does not upload images, video, logs, telemetry, tracking data, or
+          session data to external servers. Camera analysis runs on the device.
+        </p>
+      </details>
+
+      <details>
+        <summary>Which Android version does PoseGuard need?</summary>
+        <p>
+          PoseGuard requires Android 11 or newer and a device fast enough to run real-time
+          computer vision for pose tracking.
+        </p>
+      </details>
+
+      <details>
+        <summary>How do I install the PoseGuard APK?</summary>
+        <p>
+          Download the Offline or Online APK on your Android phone, open the file, and allow
+          installation from this source if Android asks. Then grant camera permission when
+          the app starts.
+        </p>
+      </details>
+    </section>
+
+    <section class="cta-section" aria-labelledby="cta-title">
+      <h2 id="cta-title">Download PoseGuard for Android</h2>
+      <p>
+        Free cornertime app APK, version 1.4.1, for Android 11 and newer. Choose Offline
+        for no network access, or Online for Intiface Central integration.
+      </p>
+
+      <div class="download-actions">
+        <a
+          class="download-button primary"
+          href="https://github.com/incident201/poseGuard/releases/download/v1.4.1/poseGuard_v1.4.1_offline_release.apk"
+        >
+          <strong>Download Offline APK</strong>
+          <span>No Android INTERNET permission</span>
+        </a>
+
+        <a
+          class="download-button secondary"
+          href="https://github.com/incident201/poseGuard/releases/download/v1.4.1/poseGuard_v1.4.1_online_release.apk"
+        >
+          <strong>Download Online APK</strong>
+          <span>Intiface Central / buttplug.io support</span>
+        </a>
+      </div>
+    </section>
+
     <footer class="footer">
       <span>PoseGuard is currently under development.</span>
-      <a href="https://github.com/incident201/poseGuard">
-        PoseGuard Android cornertime app on GitHub
-      </a>
+      <a href="https://github.com/incident201/poseGuard">PoseGuard Android cornertime app on GitHub</a>
     </footer>
   </main>
 </body>
