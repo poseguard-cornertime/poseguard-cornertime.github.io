@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f7f2e8" />
 
-  <title>Cornertime App for Android — PoseGuard</title>
+  <title>How the PoseGuard Cornertime App Works — Pose Tracking Explained</title>
   <meta
     name="description"
-    content="PoseGuard is a free cornertime app for Android with offline pose tracking, stillness detection, movement warnings, face direction checks, timer penalties, and APK downloads from GitHub."
+    content="How the PoseGuard cornertime app for Android detects movement: MediaPipe Pose Landmarker, One Euro smoothing, pose drift and sudden motion thresholds, face direction checks, timer penalties, and session flow."
   />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://poseguard-cornertime.github.io/cornertime-app/" />
 
-  <meta property="og:title" content="Cornertime App for Android — PoseGuard" />
+  <meta property="og:title" content="How the PoseGuard Cornertime App Works — Pose Tracking Explained" />
   <meta
     property="og:description"
-    content="Free Android cornertime app with offline pose tracking, stillness detection, movement warnings, face direction checks, timer penalties, and APK downloads from GitHub."
+    content="Session flow, MediaPipe pose tracking pipeline, drift and motion detection, face direction checks, penalties, and setup tips for the PoseGuard Android cornertime app."
   />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="article" />
   <meta property="og:url" content="https://poseguard-cornertime.github.io/cornertime-app/" />
   <meta property="og:site_name" content="PoseGuard" />
   <meta property="og:image" content="https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018" />
@@ -28,10 +28,10 @@
   <meta property="og:image:alt" content="PoseGuard cornertime app for Android with pose tracking" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Cornertime App for Android — PoseGuard" />
+  <meta name="twitter:title" content="How the PoseGuard Cornertime App Works — Pose Tracking Explained" />
   <meta
     name="twitter:description"
-    content="Free Android cornertime app with offline pose tracking, stillness detection, movement warnings, face direction checks, timer penalties, and APK downloads from GitHub."
+    content="Session flow, MediaPipe pose tracking pipeline, drift and motion detection, face direction checks, penalties, and setup tips for the PoseGuard Android cornertime app."
   />
   <meta name="twitter:image" content="https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018" />
 
@@ -39,7 +39,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png?v=20260614-2" />
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=20260614-2" />
 
-  <link rel="stylesheet" href="../styles.css?v=20261018" />
+  <link rel="stylesheet" href="../styles.css?v=20261018-2" />
 
   <script type="application/ld+json">
   {
@@ -55,6 +55,7 @@
     "url": "https://poseguard-cornertime.github.io/cornertime-app/",
     "downloadUrl": "https://github.com/incident201/poseGuard/releases/latest",
     "codeRepository": "https://github.com/incident201/poseGuard",
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
     "image": "https://poseguard-cornertime.github.io/assets/og-image.jpg?v=20261018",
     "screenshot": [
       "https://poseguard-cornertime.github.io/assets/slide_1.webp?v=20260614-2",
@@ -71,6 +72,27 @@
     },
     "sameAs": [
       "https://github.com/incident201/poseGuard"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "PoseGuard",
+        "item": "https://poseguard-cornertime.github.io/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "How the cornertime app works",
+        "item": "https://poseguard-cornertime.github.io/cornertime-app/"
+      }
     ]
   }
   </script>
@@ -96,13 +118,12 @@
 
   <section class="hero">
     <div class="hero-content">
-      <h1>Cornertime app for Android</h1>
+      <h1>How the PoseGuard cornertime app works</h1>
 
       <p class="lead">
-        PoseGuard is a free Android cornertime app for pose-holding sessions.
-        It uses camera-based pose tracking to check whether the user stays still,
-        keeps the initial pose, and follows optional face-direction rules during
-        a timed session.
+        A detailed guide to the PoseGuard cornertime app for Android: how a session runs,
+        how on-device pose tracking with MediaPipe detects pose drift and sudden movement,
+        how face direction checks and timer penalties work, and how to set up the phone.
       </p>
 
       <ul class="hero-facts" aria-label="Key facts">
@@ -153,38 +174,199 @@
     </figure>
   </section>
 
-  <section class="illustrated-section tracking-section">
+  <nav class="toc" aria-label="On this page">
+    <p class="section-kicker">On this page</p>
+    <ul>
+      <li><a href="#session">Session step by step</a></li>
+      <li><a href="#pipeline">Pose tracking pipeline</a></li>
+      <li><a href="#movement">How movement is measured</a></li>
+      <li><a href="#face">Face direction</a></li>
+      <li><a href="#penalties">Violations and penalties</a></li>
+      <li><a href="#feedback">Voice, sounds, timelapse</a></li>
+      <li><a href="#setup">Phone setup and poses</a></li>
+      <li><a href="#requirements">Requirements</a></li>
+    </ul>
+  </nav>
+
+  <section class="plain-section" id="session" aria-labelledby="session-title">
+    <p class="section-kicker">Session flow</p>
+    <h2 id="session-title">A cornertime session, step by step</h2>
+    <p>
+      Every PoseGuard session goes through the same stages. The app speaks each
+      instruction aloud, so the screen does not need to be visible during the session.
+    </p>
+
+    <ol class="timeline">
+      <li>
+        <h3>Configure the session</h3>
+        <p>
+          Choose an exact duration or a random time within a range. In random mode the
+          real duration stays hidden and is revealed only after the session. Pick the face
+          direction rule, sensitivity presets, penalties, and whether to record a timelapse.
+        </p>
+      </li>
+      <li>
+        <h3>Device stabilization</h3>
+        <p>
+          After pressing Start, PoseGuard reads the phone gyroscope and waits until the
+          device has been completely still for 4 seconds. A moving camera would look like
+          a moving body, so tracking never starts on a shaking phone.
+        </p>
+      </li>
+      <li>
+        <h3>Take position</h3>
+        <p>
+          A 10-second countdown gives time to step into the frame and take the pose.
+          During the last 2 seconds the app calibrates which joints are clearly visible.
+          If shoulders, elbows, hips, and knees are not all detected, the session does not
+          start: “Camera cannot see the full body”.
+        </p>
+      </li>
+      <li>
+        <h3>Reference pose is captured</h3>
+        <p>
+          The current pose becomes the reference. The timer starts and the voice says
+          “Time started. Hold your position”.
+        </p>
+      </li>
+      <li>
+        <h3>Holding the pose</h3>
+        <p>
+          Every camera frame is compared with the reference. Live Drift and Motion gauges
+          at the bottom of the screen show how close the movement is to the threshold.
+          Violations trigger a voice warning and, optionally, extra time on the timer.
+        </p>
+      </li>
+      <li>
+        <h3>Victory or failure</h3>
+        <p>
+          When the timer reaches zero the session ends in Victory. Reaching the maximum
+          number of violations ends it in failure. The summary screen shows the initial and
+          actual timer, violations by type, and offers to save the timelapse video.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="plain-section" id="pipeline" aria-labelledby="pipeline-title">
+    <p class="section-kicker">Under the hood</p>
+    <h2 id="pipeline-title">The pose tracking pipeline</h2>
+    <p>
+      All processing runs on the Android device. The machine learning models are bundled
+      inside the APK, so nothing is downloaded at runtime and no camera frames leave the
+      phone. Each frame passes through these stages:
+    </p>
+
+    <ol class="pipeline" aria-label="Processing stages">
+      <li><strong>CameraX</strong><span>1280×720 frames, only the newest kept</span></li>
+      <li><strong>Pose Landmarker</strong><span>33 body landmarks</span></li>
+      <li><strong>Identity check</strong><span>fixes left/right swaps</span></li>
+      <li><strong>One Euro Filter</strong><span>removes jitter</span></li>
+      <li><strong>Occlusion guard</strong><span>handles hidden joints</span></li>
+      <li><strong>Movement tracker</strong><span>drift and motion scores</span></li>
+      <li><strong>Session rules</strong><span>warnings and penalties</span></li>
+    </ol>
+
+    <div class="tech-grid">
+      <article>
+        <h3>MediaPipe Pose Landmarker</h3>
+        <p>
+          Body tracking uses Google’s MediaPipe Pose Landmarker in live-stream mode. For each
+          frame it returns 33 landmarks with x, y, z coordinates plus visibility and
+          presence scores. PoseGuard tracks one person and requires 70% detection and
+          presence confidence and 75% tracking confidence.
+        </p>
+        <p>
+          Two models are included: <em>Heavy</em> for best accuracy (default) and
+          <em>Full</em> for faster processing on weaker devices.
+        </p>
+      </article>
+
+      <article>
+        <h3>GPU acceleration with CPU fallback</h3>
+        <p>
+          In Auto mode tracking starts on the CPU immediately, then the GPU delegate is
+          initialized in the background and takes over once it is ready. If the GPU fails
+          or does not initialize within 15 seconds, PoseGuard stays on the CPU and remembers
+          the result for this device. GPU or CPU can also be selected manually.
+        </p>
+      </article>
+
+      <article>
+        <h3>Left/right identity stabilization</h3>
+        <p>
+          Pose models sometimes swap the left and right sides of the body, especially when the
+          person faces away from the camera, which is common in cornertime. PoseGuard compares
+          every new pose in both the direct and the mirrored form against the previous stable
+          pose and keeps the closer one. Frames with impossible torso proportions are rejected
+          as outliers.
+        </p>
+      </article>
+
+      <article>
+        <h3>One Euro Filter smoothing</h3>
+        <p>
+          Raw landmarks jitter slightly even when a person stands perfectly still. Each landmark
+          is smoothed with a One Euro Filter: an adaptive low-pass filter that smooths heavily
+          when the body is still and reacts quickly when it really moves. Without it, sensor
+          noise would look like movement.
+        </p>
+      </article>
+
+      <article>
+        <h3>Occlusion guard</h3>
+        <p>
+          Hands behind the back or the head, or legs hidden behind each other, are hard for any
+          pose model. During the last 2 seconds of the countdown PoseGuard measures visibility
+          and jitter of elbows, wrists, knees, and ankles. Joints that are hidden or unstable are
+          frozen at their position relative to the body, so a guessed position cannot cause
+          false violations.
+        </p>
+        <p>
+          If a frozen joint becomes clearly visible for 5 frames in a row, tracking hands over
+          to it smoothly over 8 frames.
+        </p>
+      </article>
+
+      <article>
+        <h3>Short dropout protection</h3>
+        <p>
+          If the detector briefly loses the body for up to 5 frames (180 ms), the last valid pose
+          is held instead of reporting a disappearance. Longer gaps reset the filters so stale
+          data is never compared with the reference.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="illustrated-section tracking-section" id="movement">
     <div class="section-copy">
       <p class="section-kicker">Pose tracking</p>
 
-      <h2>How PoseGuard does pose tracking</h2>
+      <h2>How movement is measured</h2>
 
       <p>
-        At the start of a session, PoseGuard records the initial body position as
-        the reference pose. After the timer starts, the app continuously compares
-        live camera tracking against that reference.
-      </p>
-
-      <p>
-        This makes PoseGuard different from a simple countdown timer. A normal timer
-        only measures time. PoseGuard also checks whether the pose is actually being
-        held.
+        PoseGuard compares 12 key points: shoulders, elbows, wrists, hips, knees, and ankles.
+        Coordinates are centered on the hips and divided by the body size (the largest of
+        shoulder width, hip width, and torso length). Because of this normalization the
+        thresholds work the same whether the phone is 2 or 4 meters away.
       </p>
 
       <div class="mini-checks">
         <article>
           <h3>Pose drift</h3>
           <p>
-            PoseGuard detects when the user gradually moves too far away from the
-            starting pose.
+            Distance between the current pose and the reference. A violation is counted only
+            if drift stays above the threshold for about 1.5 seconds, so a brief wobble is
+            ignored but slowly changing the pose is not.
           </p>
         </article>
 
         <article>
           <h3>Sudden movement</h3>
           <p>
-            PoseGuard can react to short, sharp movements that break stillness even
-            if the overall pose has not drifted very far.
+            Change between consecutive frames. Motion above the threshold for 0.9 seconds is a
+            violation; a sharp spike of 2.5× the threshold counts immediately.
           </p>
         </article>
       </div>
@@ -193,7 +375,7 @@
     <figure class="section-image">
       <img
         src="../assets/Slide_howposetracking.webp"
-        alt="Illustration explaining how PoseGuard tracks body pose during a session"
+        alt="How the PoseGuard cornertime app compares live pose tracking with the reference pose"
         width="1086"
         height="1448"
         loading="lazy"
@@ -202,7 +384,55 @@
     </figure>
   </section>
 
-  <section class="visual-card-grid" aria-label="Optional PoseGuard session rules">
+  <section class="plain-section" aria-labelledby="presets-title">
+    <h2 id="presets-title">Sensitivity presets</h2>
+    <p>
+      Both thresholds are set as a fraction of body size. Wrists count at 70% weight in drift
+      by default, because hands move slightly more than the rest of the body even in a strict
+      pose. Small deadbands remove the remaining sensor noise before thresholds are checked.
+    </p>
+
+    <div class="table-grid">
+      <div class="table-wrap">
+        <table class="data-table">
+          <caption>Pose deviation tolerance (drift)</caption>
+          <thead>
+            <tr><th scope="col">Preset</th><th scope="col">Threshold</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Very easy</td><td>20% of body size</td></tr>
+            <tr><td>Easy</td><td>18%</td></tr>
+            <tr class="is-default"><td>Normal (default)</td><td>16%</td></tr>
+            <tr><td>Strict</td><td>14%</td></tr>
+            <tr><td>Very strict</td><td>12%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <caption>Motion sensitivity (sudden movement)</caption>
+          <thead>
+            <tr><th scope="col">Preset</th><th scope="col">Threshold</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Very low</td><td>8% per frame</td></tr>
+            <tr><td>Low</td><td>6%</td></tr>
+            <tr class="is-default"><td>Normal (default)</td><td>4%</td></tr>
+            <tr><td>High</td><td>3%</td></tr>
+            <tr><td>Very high</td><td>2%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="table-note">
+      Getting false violations? Choose a softer preset first, then improve lighting and make
+      sure the whole body is in the frame.
+    </p>
+  </section>
+
+  <section class="visual-card-grid" id="face" aria-label="Face direction and timer penalties">
     <article class="visual-card">
       <figure class="visual-card-image">
         <img
@@ -221,14 +451,16 @@
         <h2>Face direction</h2>
 
         <p>
-          Face tracking can optionally enforce whether the user should face the camera
-          or look away from it. Breaking the selected face-direction rule can be counted
-          as a violation.
+          PoseGuard crops the head area using the face landmarks from the pose and runs
+          MediaPipe Face Detector (BlazeFace short-range) on it. Choose “Face to camera” or
+          “Face away from camera”. Breaking the rule for 5 frames in a row counts as a
+          violation. If face detection stops working for 5 seconds, the session is stopped
+          without a penalty.
         </p>
       </div>
     </article>
 
-    <article class="visual-card">
+    <article class="visual-card" id="penalties">
       <figure class="visual-card-image">
         <img
           src="../assets/Slide_timer.webp"
@@ -246,14 +478,99 @@
         <h2>Timer penalties</h2>
 
         <p>
-          PoseGuard can optionally add extra time after violations. This allows a session
-          to continue instead of ending immediately after the first mistake.
+          Instead of ending the session after the first mistake, PoseGuard can add extra
+          minutes to the timer. Penalties are set separately for the first, second, third,
+          and every following violation.
         </p>
       </div>
     </article>
   </section>
 
-  <section class="illustrated-section setup-section image-left">
+  <section class="plain-section" aria-labelledby="violations-title">
+    <h2 id="violations-title">Violations, penalties, and limits</h2>
+    <p>PoseGuard counts four types of violations, each with its own voice warning:</p>
+
+    <div class="rule-grid">
+      <article>
+        <h3>Pose drift</h3>
+        <p>“You changed pose”</p>
+      </article>
+      <article>
+        <h3>Sudden movement</h3>
+        <p>“You moved”</p>
+      </article>
+      <article>
+        <h3>Face direction</h3>
+        <p>“You looked at the camera” or “You turned away”</p>
+      </article>
+      <article>
+        <h3>Out of frame</h3>
+        <p>Key points missing for more than 1.5 seconds</p>
+      </article>
+    </div>
+
+    <h3 class="subheading">Default penalty schedule</h3>
+    <ol class="penalty-steps" aria-label="Default penalties">
+      <li><span>1st violation</span><strong>+1 min</strong></li>
+      <li><span>2nd violation</span><strong>+3 min</strong></li>
+      <li><span>3rd violation</span><strong>+3 min</strong></li>
+      <li class="is-fail"><span>4th violation</span><strong>Session failed</strong></li>
+    </ol>
+
+    <p>
+      All values are configurable: penalties from 0 to 9999 minutes, the maximum number of
+      violations from 0 to 9999, and the minimum interval between counted violations from
+      0 to 30 seconds (5 seconds by default), so one long movement is not counted several
+      times. Penalties can also be turned off completely.
+    </p>
+  </section>
+
+  <section class="plain-section" id="feedback" aria-labelledby="feedback-title">
+    <p class="section-kicker">Feedback</p>
+    <h2 id="feedback-title">Voice, sounds, and timelapse</h2>
+
+    <div class="tech-grid">
+      <article>
+        <h3>Custom reactions for 10 events</h3>
+        <p>
+          Every event, from “Place the device still” to “Time is up” and each violation type,
+          can use its own reaction: a Text-to-Speech voice with an editable phrase, your own
+          audio file, a generated PCM tone (frequency, duration, channel, fade, single tone or
+          double beep), phone vibration, or nothing.
+        </p>
+      </article>
+
+      <article>
+        <h3>Timelapse recording</h3>
+        <p>
+          PoseGuard can record the session as a timelapse: 10× speed, 30 fps, H.264 MP4. After
+          the session the app asks whether to save it; saved videos go to
+          <code>Movies/PoseValidator</code> on the device and are never uploaded.
+        </p>
+      </article>
+
+      <article>
+        <h3>Intiface Central (Online APK)</h3>
+        <p>
+          The Online APK connects to Intiface Central over WebSocket
+          (<code>ws://127.0.0.1:12345</code> by default) and controls compatible devices
+          through buttplug.io. Vibration can run in the background while the pose is held and
+          react to violations with a vibration or a pause, as a constant signal or pulses with
+          adjustable strength.
+        </p>
+      </article>
+
+      <article>
+        <h3>Six languages</h3>
+        <p>
+          The app interface and voice prompts are available in English, Russian, Spanish,
+          Italian, German, and French.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="illustrated-section setup-section image-left" id="setup">
     <figure class="section-image">
       <img
         src="../assets/Slide_setup.webp"
@@ -271,27 +588,25 @@
       <h2>How to set up the phone</h2>
 
       <p>
-        For reliable tracking, place the Android device in a stable position and keep
-        it still during the session. A moving camera can look like user movement and
-        may cause false violations.
+        Place the Android device on a tripod or another stable support in portrait
+        orientation. The gyroscope check will not start the session until the phone is still,
+        and any camera shake during the session can look like body movement.
       </p>
 
       <p>
-        Use portrait orientation and choose a camera angle where the full body is visible.
-        The app works best when the subject fits fully inside the frame before the timer
-        starts.
+        Choose a camera angle where the full body fits inside the frame with some margin.
+        Remove extra objects that could block the view.
       </p>
 
       <p>
-        Good lighting helps the camera and computer vision model see the body silhouette
-        more clearly. Avoid dark rooms, strong backlight, or cluttered backgrounds when
-        possible.
+        Good, even lighting helps the model see the body silhouette. Avoid dark rooms, strong
+        backlight from a window behind the subject, and cluttered backgrounds when possible.
       </p>
     </div>
   </section>
 
-  <section class="plain-section">
-    <h2>How to choose a pose that tracks well</h2>
+  <section class="plain-section" aria-labelledby="pose-title">
+    <h2 id="pose-title">How to choose a pose that tracks well</h2>
 
     <p>
       PoseGuard can be used with different static poses, but tracking works best when
@@ -301,82 +616,58 @@
 
     <p>
       Simple and clearly visible poses are usually more reliable than complex poses
-      where arms or legs overlap heavily. Loose or bulky clothing can make pose tracking
-      harder, while close-fitting clothing usually gives the app a clearer body shape
-      to track.
+      where arms or legs overlap heavily. Hands behind the head or back are supported by the
+      occlusion guard, but the elbows should stay visible. Loose or bulky clothing makes pose
+      tracking harder, while close-fitting clothing gives the app a clearer body shape.
     </p>
 
     <p>
-      If you get false violations, try improving lighting, moving the phone farther
-      away, simplifying the pose, lowering sensitivity, or making sure the camera is
-      completely still.
+      If you get false violations, try a softer sensitivity preset, better lighting, moving
+      the phone farther away, simplifying the pose, or switching to the Heavy model.
     </p>
   </section>
 
-  <section class="plain-section">
-    <h2>Offline Android cornertime app</h2>
-
-    <p>
-      The Offline APK is designed for local use. It does not request Android INTERNET
-      permission, so Android prevents it from accessing the network.
-    </p>
-
-    <p>
-      Pose detection, face detection, movement analysis, timer logic, penalties,
-      voice feedback, and timelapse recording run on the Android device. The offline
-      version does not upload images, video, logs, telemetry, tracking data, session
-      data, or private user data to external servers.
-    </p>
-  </section>
-
-  <section class="plain-section">
-    <h2>Online version with optional integrations</h2>
-
-    <p>
-      The Online APK includes the same core cornertime and pose tracking features as
-      the offline version. It also adds optional integration with Intiface Central /
-      buttplug.io for compatible external devices configured by the user.
-    </p>
-
-    <p>
-      Choose the Online APK only if you need network-based integrations. If you want
-      PoseGuard to have no network access at all, choose the Offline APK.
-    </p>
-  </section>
-
-  <section class="illustrated-section privacy-section">
-    <div class="section-copy">
-      <p class="section-kicker">Privacy</p>
-
-      <h2>Privacy and local processing</h2>
-
+  <section class="version-summary" aria-label="Offline and Online versions">
+    <article>
+      <h2>Offline APK</h2>
       <p>
-        PoseGuard is built around local on-device processing. The app does not need
-        an external server to analyze pose, detect movement, run the timer, apply
-        penalties, speak warnings, or record a timelapse.
+        No Android INTERNET permission: Android itself prevents the app from accessing the
+        network. Recommended unless you need device integrations.
       </p>
+    </article>
 
+    <article>
+      <h2>Online APK</h2>
       <p>
-        The Online APK uses INTERNET permission only for user-configured integrations
-        such as Intiface Central communication. Core camera analysis still runs on
-        the Android device.
+        Same pose tracking plus optional Intiface Central / buttplug.io integration. Camera
+        analysis still runs on the device. <a href="../">Compare versions and privacy</a>.
       </p>
+    </article>
+  </section>
+
+  <section class="requirements-section" id="requirements" aria-labelledby="req-title">
+    <h2 id="req-title">Requirements</h2>
+
+    <div class="table-wrap">
+      <table class="data-table spec-table">
+        <tbody>
+          <tr><th scope="row">Android</th><td>11 or newer</td></tr>
+          <tr><th scope="row">Processor</th><td>ARM64, 8 cores recommended</td></tr>
+          <tr><th scope="row">Memory</th><td>8 GB RAM recommended, about 1.5 GB free during a session</td></tr>
+          <tr><th scope="row">GPU</th><td>OpenGL ES 3.1+ for GPU acceleration (optional)</td></tr>
+          <tr><th scope="row">Sensors</th><td>Camera; gyroscope for stabilization (timed fallback without it)</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <figure class="section-image">
-      <img
-        src="../assets/Slide_privacy.webp"
-        alt="PoseGuard privacy and local processing explanation"
-        width="1086"
-        height="1448"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
+    <p>
+      Real-time computer vision is demanding. On weaker phones choose the Full model and keep
+      acceleration on Auto.
+    </p>
   </section>
 
-  <section class="plain-section">
-    <h2>Who this app is for</h2>
+  <section class="plain-section" aria-labelledby="who-title">
+    <h2 id="who-title">Who this app is for</h2>
 
     <p>
       PoseGuard is useful when a session needs more than a regular timer. It is made
@@ -386,35 +677,22 @@
     </p>
 
     <p>
-      The app is currently under development, so behavior and available features may
-      change between releases.
+      The app is currently under development, so behavior, default values, and available
+      features may change between releases.
     </p>
   </section>
 
-  <section class="requirements-section">
-    <h2>Requirements</h2>
+  <section class="plain-section" aria-labelledby="oss-title">
+    <h2 id="oss-title">Open source and APK downloads</h2>
 
     <p>
-      PoseGuard requires Android 11 or newer and a device with enough performance
-      to process computer vision in real time.
+      PoseGuard is free software licensed under GPL-3.0. It is written in Kotlin with
+      Jetpack Compose, CameraX, and MediaPipe Tasks Vision; the Online APK uses buttplug4j
+      for Intiface Central.
     </p>
 
     <p>
-      For best results, use a reasonably powerful device, good lighting, a stable
-      phone position, and a camera view where the subject is fully visible.
-    </p>
-  </section>
-
-  <section class="plain-section">
-    <h2>Open source and APK downloads</h2>
-
-    <p>
-      PoseGuard is open source. APK downloads, release notes, and source code are
-      available on GitHub.
-    </p>
-
-    <p>
-      Open the project here:
+      Source code, release notes, and APK downloads:
       <a href="https://github.com/incident201/poseGuard">PoseGuard Android cornertime app source code and releases</a>.
     </p>
   </section>
